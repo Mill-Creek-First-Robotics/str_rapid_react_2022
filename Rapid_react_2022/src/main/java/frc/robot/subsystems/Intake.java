@@ -12,6 +12,7 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
+  //calls da roller motor and assigns it a speed controller
   WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
 
   public Intake() 
@@ -21,6 +22,7 @@ public class Intake extends SubsystemBase {
 
   public void setSpeed(double speed)
   {
+    //sets the roller motors speed
     roller.set(speed);
   }
 
