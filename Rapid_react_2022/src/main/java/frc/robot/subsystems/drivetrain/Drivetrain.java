@@ -19,6 +19,7 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain() 
   {
+    //calls da motors and gives dem da speed controllers but wit da different name
     frontLeftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR);
     backLeftMotor = new WPI_TalonSRX(Constants.BACK_LEFT_MOTOR);
     frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
@@ -31,6 +32,7 @@ public class Drivetrain extends SubsystemBase {
   //Gyro is feild oreintation while zRotation is relative to the robot
   public void driveCartesian(double ySpeed, double xSpeed, double zRotation, double gyroAngle)
   {
+    //drives the freakin thing
     mecanumDrive.driveCartesian(ySpeed, xSpeed, zRotation, gyroAngle);
   }
 
