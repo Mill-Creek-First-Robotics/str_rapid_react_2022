@@ -18,7 +18,8 @@ public final class Constants
     public static final int BACK_LEFT_MOTOR = 2;
     public static final int FRONT_RIGHT_MOTOR = 3;
     public static final int BACK_RIGHT_MOTOR = 4;
+    public static final int ROLLER_MOTOR = 5;
 
-    public static final int ENCODER = 5;
-    public static final int GYROSCOPE = 6;
+    public static final int ENCODER = 6;
+    public static final int GYROSCOPE = 7;
 }
