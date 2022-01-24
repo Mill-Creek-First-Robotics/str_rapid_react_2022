@@ -24,4 +24,7 @@ public final class Constants
     // the ports of other stuff
     public static final int ENCODER = 6;
     public static final int GYROSCOPE = 7;
+
+    // ports of controllers
+    public static final int CONTROLLER = 0;
 }
