@@ -6,6 +6,8 @@ package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
 import java.math.*;
@@ -18,7 +20,8 @@ public class Drivetrain extends SubsystemBase {
   WPI_TalonSRX backRightMotor = null;
   public MecanumDrive mecanumDrive;
   private double angle = 0;
-  private double 
+  AHRS gyroscope = new AHRS(SPI.Port.kMXP);
+
 
   public Drivetrain() 
   {
@@ -32,10 +35,10 @@ public class Drivetrain extends SubsystemBase {
 
   //Angles are measured clockwise from the positive X axis. The robot's speed is independent from its angle or rotation rate.
   //Gyro is feild oreintation while zRotation is relative to the robot
-  public void driveCartesian(double ySpeed, double xSpeed, double rotationX,double rotationY, double gyroAngle)
+  public void polDrive(double ySpeed, double xSpeed, double rotationX,double rotationY, double gyroAngle)
   {
 
-    //calculates polar angle we need to rotate to
+    //calculates polar angle we need to rotate
     angle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI);
     
 
