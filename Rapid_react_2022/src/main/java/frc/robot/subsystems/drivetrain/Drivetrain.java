@@ -6,10 +6,13 @@ package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -18,6 +21,7 @@ public class Drivetrain extends SubsystemBase {
   WPI_TalonSRX frontRightMotor = null;
   WPI_TalonSRX backRightMotor = null;
   public static MecanumDrive mecanumDrive;
+  public static DifferentialDrive differentialDrive
   private static double angle = 0;
   static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
 
@@ -29,6 +33,11 @@ public class Drivetrain extends SubsystemBase {
     backLeftMotor = new WPI_TalonSRX(Constants.BACK_LEFT_MOTOR);
     frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
     backRightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR);
+
+    SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRightMotor, backRightMotor);
+    SpeedControllerGroup leftMotors = new SpeedControllerGroup(frontLeftMotor, backLeftMotor);
+    differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
+
     mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
   }
 
@@ -43,6 +52,11 @@ public class Drivetrain extends SubsystemBase {
 
     //drives the freakin thing
     mecanumDrive.driveCartesian(ySpeed, xSpeed, rotPower, gyroscope.getAngle());
+  }
+
+  public static void tankDrive(double leftSpeed, double rightSpeed)
+  {
+    differentialDrive.tankDrive(leftSpeed, rightSpeed);
   }
 
   @Override
