@@ -16,13 +16,13 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Drivetrain extends SubsystemBase {
 
-  WPI_TalonSRX frontLeftMotor = null;
-  WPI_TalonSRX backLeftMotor = null;
-  WPI_TalonSRX frontRightMotor = null;
-  WPI_TalonSRX backRightMotor = null;
+  static WPI_TalonSRX frontLeftMotor = null;
+  static WPI_TalonSRX backLeftMotor = null;
+  static WPI_TalonSRX frontRightMotor = null;
+  static WPI_TalonSRX backRightMotor = null;
   public static MecanumDrive mecanumDrive;
-  public static DifferentialDrive differentialDrive
-  private static double angle = 0;
+  public static DifferentialDrive differentialDrive;
+  private static double targetAngle;
   static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
 
 
@@ -43,7 +43,7 @@ public class Drivetrain extends SubsystemBase {
 
   //Angles are measured clockwise from the positive X axis. The robot's speed is independent from its angle or rotation rate.
   //Gyro is feild oreintation while zRotation is relative to the robot
-  public static void polDrive(double ySpeed, double xSpeed, double rotationX, double rotationY)
+  /*public static void polDrive(double ySpeed, double xSpeed, double rotationX, double rotationY)
   {
     //calculates polar angle we need to rotate
     angle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI);
@@ -52,11 +52,17 @@ public class Drivetrain extends SubsystemBase {
 
     //drives the freakin thing
     mecanumDrive.driveCartesian(ySpeed, xSpeed, rotPower, gyroscope.getAngle());
-  }
+  }*/
 
-  public static void tankDrive(double leftSpeed, double rightSpeed)
+  public static void tankDrive(double forwardSpeed,  double rotationX, double rotationY)
   {
-    differentialDrive.tankDrive(leftSpeed, rightSpeed);
+    //differentialDrive.arcadeDrive(forwardSpeed, 0);
+    targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - gyroscope.getYaw();
+    double rotPow = targetAngle / 180;
+    frontLeftMotor.set(forwardSpeed - rotPow);
+    backLeftMotor.set(forwardSpeed - rotPow);
+    frontRightMotor.set(forwardSpeed + rotPow);
+    backRightMotor.set(forwardSpeed + rotPow);
   }
 
   @Override
