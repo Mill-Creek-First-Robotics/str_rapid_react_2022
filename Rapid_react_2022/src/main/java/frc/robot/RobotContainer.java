@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Drivetrain m_drivetrain = new Drivetrain();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -38,7 +37,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     final XboxController m_log = new XboxController(Constants.CONTROLLER);
-    m_drivetrain.driveCartesian(m_log.getY(Hand.kRight), m_log.getX(Hand.kRight), m_log.getY(Hand.kLeft), m_log.getY(Hand.kLeft), gyroAngle);
+    Drivetrain.polDrive(m_log.getY(Hand.kRight), m_log.getX(Hand.kRight), m_log.getY(Hand.kLeft), m_log.getY(Hand.kLeft));
 
   }
 

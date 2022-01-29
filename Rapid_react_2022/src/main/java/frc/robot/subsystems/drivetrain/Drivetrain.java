@@ -10,17 +10,17 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
-import java.math.*;
-import edu.wpi.first.math.controller.PIDController;
+import com.kauailabs.navx.frc.*;
+
 public class Drivetrain extends SubsystemBase {
 
   WPI_TalonSRX frontLeftMotor = null;
   WPI_TalonSRX backLeftMotor = null;
   WPI_TalonSRX frontRightMotor = null;
   WPI_TalonSRX backRightMotor = null;
-  public MecanumDrive mecanumDrive;
-  private double angle = 0;
-  AHRS gyroscope = new AHRS(SPI.Port.kMXP);
+  public static MecanumDrive mecanumDrive;
+  private static double angle = 0;
+  static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
 
 
   public Drivetrain() 
@@ -35,15 +35,15 @@ public class Drivetrain extends SubsystemBase {
 
   //Angles are measured clockwise from the positive X axis. The robot's speed is independent from its angle or rotation rate.
   //Gyro is feild oreintation while zRotation is relative to the robot
-  public void polDrive(double ySpeed, double xSpeed, double rotationX,double rotationY, double gyroAngle)
+  public static void polDrive(double ySpeed, double xSpeed, double rotationX, double rotationY)
   {
-
     //calculates polar angle we need to rotate
+    //wait a second... this is pointless
     angle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI);
-    
+    double rotPower = (angle - 180) / 180;
 
     //drives the freakin thing
-    mecanumDrive.driveCartesian(ySpeed, xSpeed, 0, gyroAngle);
+    mecanumDrive.driveCartesian(ySpeed, xSpeed, rotPower, gyroscope.getAngle());
   }
 
   @Override
