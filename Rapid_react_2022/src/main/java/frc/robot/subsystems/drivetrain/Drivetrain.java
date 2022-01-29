@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
-import com.kauailabs.navx.frc.*;
-import frc.robot.subsystems.drivetrain.PIDgyro;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -37,11 +37,9 @@ public class Drivetrain extends SubsystemBase {
   public static void polDrive(double ySpeed, double xSpeed, double rotationX, double rotationY)
   {
     //calculates polar angle we need to rotate
-    //wait a second... this is pointless
     angle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI);
+    //converts that angle to a 1 to -1 value
     double rotPower = (angle - 180) / 180;
-
-
 
     //drives the freakin thing
     mecanumDrive.driveCartesian(ySpeed, xSpeed, rotPower, gyroscope.getAngle());
