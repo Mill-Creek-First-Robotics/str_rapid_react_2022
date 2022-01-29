@@ -6,11 +6,10 @@ package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
 import com.kauailabs.navx.frc.*;
+import frc.robot.subsystems.drivetrain.PIDgyro;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -41,6 +40,8 @@ public class Drivetrain extends SubsystemBase {
     //wait a second... this is pointless
     angle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI);
     double rotPower = (angle - 180) / 180;
+
+
 
     //drives the freakin thing
     mecanumDrive.driveCartesian(ySpeed, xSpeed, rotPower, gyroscope.getAngle());
