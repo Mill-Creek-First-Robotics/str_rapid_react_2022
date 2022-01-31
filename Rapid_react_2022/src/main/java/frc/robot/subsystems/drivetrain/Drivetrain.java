@@ -10,7 +10,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
@@ -23,7 +24,8 @@ public class Drivetrain extends SubsystemBase {
   public static MecanumDrive mecanumDrive;
   public static DifferentialDrive differentialDrive;
   private static double targetAngle;
-  static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
+  //static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
+  static AnalogGyro gyroscope = new AnalogGyro(Constants.GYROSCOPE);
 
 
   public Drivetrain() 
@@ -57,7 +59,7 @@ public class Drivetrain extends SubsystemBase {
   public static void supremeTankDrive(double forwardSpeed,  double rotationX, double rotationY)
   {
     //differentialDrive.arcadeDrive(forwardSpeed, 0);
-    targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - gyroscope.getYaw();
+    targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - gyroscope.getAngle();
     double rotPow = targetAngle / 180;
     frontLeftMotor.set(forwardSpeed - rotPow);
     backLeftMotor.set(forwardSpeed - rotPow);
