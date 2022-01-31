@@ -13,14 +13,14 @@ public class Intake extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
   //calls da roller motor and assigns it a speed controller
-  final double el_speed = 25.0;
+  final double el_speed = 0.25;
   WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
   boolean toggled;
 
   public Intake() 
   {
     roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
-    boolean toggled = false;
+    toggled = false;
   }
 
   public void setSpeed(double speed)
