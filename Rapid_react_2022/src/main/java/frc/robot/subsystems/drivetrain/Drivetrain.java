@@ -54,7 +54,7 @@ public class Drivetrain extends SubsystemBase {
     mecanumDrive.driveCartesian(ySpeed, xSpeed, rotPower, gyroscope.getAngle());
   }*/
 
-  public static void tankDrive(double forwardSpeed,  double rotationX, double rotationY)
+  public static void supremeTankDrive(double forwardSpeed,  double rotationX, double rotationY)
   {
     //differentialDrive.arcadeDrive(forwardSpeed, 0);
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - gyroscope.getYaw();
