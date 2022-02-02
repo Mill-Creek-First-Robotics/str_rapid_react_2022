@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
 //import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.SPI;
+//import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Drivetrain extends SubsystemBase {
@@ -58,8 +58,10 @@ public class Drivetrain extends SubsystemBase {
 
   public static void supremeTankDrive(double forwardSpeed,  double rotationX, double rotationY)
   {
-    //differentialDrive.arcadeDrive(forwardSpeed, 0);
-    targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - gyroscope.getAngle();
+    double calculatedGyroAngle = gyroscope.getAngle() % 360;
+    if(calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
+
+    targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
     double rotPow = targetAngle / 180;
     frontLeftMotor.set(forwardSpeed - rotPow);
     backLeftMotor.set(forwardSpeed - rotPow);
