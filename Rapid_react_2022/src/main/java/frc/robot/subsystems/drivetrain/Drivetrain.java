@@ -59,8 +59,7 @@ public class Drivetrain extends SubsystemBase {
 
   public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY)
   {
-    double calculatedGyroAngle = gyroscope.getAngle() % 360;
-    if(calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
+    double calculatedGyroAngle = (gyroscope.getAngle() % 360) - 180;
     calculatedGyroAngle = calculatedGyroAngle * motorLimiter;
 
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
