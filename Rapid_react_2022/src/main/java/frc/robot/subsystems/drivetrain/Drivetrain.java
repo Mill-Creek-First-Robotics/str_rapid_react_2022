@@ -27,7 +27,7 @@ public class Drivetrain extends SubsystemBase {
   public static DifferentialDrive differentialDrive;
   private static double targetAngle;
   static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
-  static AnalogGyro gyroscope = new AnalogGyro(Constants.GYROSCOPE);
+  //static AnalogGyro gyroscope = new AnalogGyro(Constants.GYROSCOPE);
 
 
   public Drivetrain() 
