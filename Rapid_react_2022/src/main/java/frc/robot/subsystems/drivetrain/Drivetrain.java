@@ -102,10 +102,14 @@ public class Drivetrain extends SubsystemBase {
     frontRightMotor.set(forwardSpeed + rotPow);
     backRightMotor.set(forwardSpeed + rotPow);
   }
-  public static void ultraMegaTurningMethod()
+
+  public static void ultraMegaTurningMethod(double angle)
   {
     
+    
+
   }
+
   @Override
   public void periodic() 
   {
