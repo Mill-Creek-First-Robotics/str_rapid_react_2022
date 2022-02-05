@@ -75,6 +75,26 @@ public class Drivetrain extends SubsystemBase {
     backRightMotor.set(forwardSpeed + rotPow);
   }
 
+  public static void supremeTankDrivePart2BattleOfTheWheels(double forwardSpeed, double speedLimit,  double rotationX, double rotationY)
+  {
+    double calculatedGyroAngle = gyroscope.getAngle() % 360;
+    if(calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
+    calculatedGyroAngle = calculatedGyroAngle * speedLimit;
+
+    targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
+
+    double turnLimiter;
+    if(forwardSpeed == 0){turnLimiter = speedLimit;}
+    else{turnLimiter = 1 - speedLimit;}
+    double rotPow = (targetAngle / 180) * turnLimiter;
+
+
+    frontLeftMotor.set(forwardSpeed - rotPow);
+    backLeftMotor.set(forwardSpeed - rotPow);
+    frontRightMotor.set(forwardSpeed + rotPow);
+    backRightMotor.set(forwardSpeed + rotPow);
+  }
+
   @Override
   public void periodic() 
   {
