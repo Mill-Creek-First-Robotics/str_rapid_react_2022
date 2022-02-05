@@ -13,7 +13,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
   //calls da roller motor and assigns it a speed controller
-  final double el_speed = 0.25;
+  double el_speed = 0.25;
   WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
   boolean toggled;
 
@@ -28,6 +28,13 @@ public class Intake extends SubsystemBase {
   {
     //sets the roller motors speed
     roller.set(speed);
+  }
+
+  public void inverseElSpeed() {
+    el_speed = el_speed * -1;
+    if(toggled) {
+      roller.set(el_speed);
+    }
   }
 
   public void updateToggle(boolean isPressed) {
