@@ -23,6 +23,7 @@ public class Intake extends SubsystemBase {
     toggled = false;
   }
 
+
   public void setSpeed(double speed)
   {
     //sets the roller motors speed
@@ -30,10 +31,13 @@ public class Intake extends SubsystemBase {
   }
 
   public void updateToggle(boolean isPressed) {
+    //if toggle is pressed toggled is opposite of its original state
     if(isPressed) {
       toggled = !toggled;
     }
 
+    // if toggled is on it will set to default speed
+    //else toggled must be off and speed is zero
     if(toggled) {
       roller.set(el_speed);
     } else {
