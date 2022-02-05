@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
 public class Drivetrain extends SubsystemBase {
 
+  static double motorLimiter = 0.5;
   static WPI_TalonSRX frontLeftMotor = null;
   static WPI_TalonSRX backLeftMotor = null;
   static WPI_TalonSRX frontRightMotor = null;
@@ -49,7 +50,7 @@ public class Drivetrain extends SubsystemBase {
 
 
 
-    mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
+    //mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
   }
 
   //Angles are measured clockwise from the positive X axis. The robot's speed is independent from its angle or rotation rate.
@@ -65,13 +66,37 @@ public class Drivetrain extends SubsystemBase {
     mecanumDrive.driveCartesian(ySpeed, xSpeed, rotPower, gyroscope.getAngle());
   }*/
 
-  public static void supremeTankDrive(double forwardSpeed,  double rotationX, double rotationY)
+  public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY)
   {
-    double calculatedGyroAngle = gyroscope.getAngle() % 360;
-    if(calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
+    double calculatedGyroAngle = (gyroscope.getAngle() % 360);
+    if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
 
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
-    double rotPow = targetAngle / 180;
+
+    double turnLimiter;
+    if(forwardSpeed == 0){turnLimiter = motorLimiter;}
+    else{turnLimiter = 1 - motorLimiter;}
+    double rotPow = (targetAngle / 180) * turnLimiter;
+
+    frontLeftMotor.set(forwardSpeed - rotPow);
+    backLeftMotor.set(forwardSpeed - rotPow);
+    frontRightMotor.set(forwardSpeed + rotPow);
+    backRightMotor.set(forwardSpeed + rotPow);
+  }
+
+  public static void supremeTankDrivePart2BattleOfTheWheels(double forwardSpeed, double speedLimit,  double rotationX, double rotationY)
+  {
+    double calculatedGyroAngle = (gyroscope.getAngle() % 360);
+    if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
+
+    targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
+
+    double turnLimiter;
+    if(forwardSpeed == 0){turnLimiter = speedLimit;}
+    else{turnLimiter = 1 - speedLimit;}
+    double rotPow = (targetAngle / 180) * turnLimiter;
+
+
     frontLeftMotor.set(forwardSpeed - rotPow);
     backLeftMotor.set(forwardSpeed - rotPow);
     frontRightMotor.set(forwardSpeed + rotPow);
