@@ -47,7 +47,10 @@ public class Drivetrain extends SubsystemBase {
     final double kI = 0.0;
     final double kD = 0.0;
     final double tolerance = 2.0;
-    angleController = new PIDController(kP, kI, kD);
+    angleController = new PIDController(kP, kI, kD, gyroscope, this);
+    angleController.setInputRange(-180.0f, 180.0f);
+    angleController.setOutputRange(-1.0, 1.0);
+    angleController.setAbsoluteTolerance(tolerance);
 
     // mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor,
     // frontRightMotor, backRightMotor);
@@ -141,7 +144,14 @@ public class Drivetrain extends SubsystemBase {
       rotateToAngle = true;
     double currentRotationRate;
     if (rotateToAngle) {
+      //angleController.enable();
       currentRotationRate = MathUtil.clamp(angleController.calculate(gyroscope.getAngle()), -1.0, 1.0);
+  }
+  }
+
+  @Override
+  public void pidWrite(double output){
+    rotateToAngle = output;
   }
 
   @Override
