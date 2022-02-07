@@ -88,8 +88,7 @@ public class Drivetrain extends SubsystemBase {
 
   public static void supremeTankDrivePart2BattleOfTheWheels(double forwardSpeed, double speedLimit,  double rotationX, double rotationY)
   {
-    double calculatedGyroAngle = (gyroscope.getAngle() % 360);
-    if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
+    double calculatedGyroAngle = gyroscope.getYaw();
 
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
 
