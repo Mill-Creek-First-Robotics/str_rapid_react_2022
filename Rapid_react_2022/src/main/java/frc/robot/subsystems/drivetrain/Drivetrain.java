@@ -68,8 +68,10 @@ public class Drivetrain extends SubsystemBase {
 
   public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY)
   {
+    /* In case of a switch back to analog
     double calculatedGyroAngle = (gyroscope.getAngle() % 360);
-    if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
+    if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}*/
+    double calculatedGyroAngle = gyroscope.getYaw();
 
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
 
