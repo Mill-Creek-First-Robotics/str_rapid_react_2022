@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
@@ -27,6 +26,7 @@ public class Drivetrain extends SubsystemBase {
   static WPI_TalonSRX backRightMotor = null;
   public static MecanumDrive mecanumDrive;
   public static DifferentialDrive differentialDrive;
+  static double rotateToAngleRate;
   private static double targetAngle;
   static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
   static PIDController angleController;
@@ -46,17 +46,17 @@ public class Drivetrain extends SubsystemBase {
     final double kP = 0.0;
     final double kI = 0.0;
     final double kD = 0.0;
-    final double tolerance = 2.0;
     angleController = new PIDController(kP, kI, kD);
 
     // mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor,
     // frontRightMotor, backRightMotor);
   }
 
-<<<<<<< HEAD
   // Angles are measured clockwise from the positive X axis. The robot's speed is
   // independent from its angle or rotation rate.
   // Gyro is feild oreintation while zRotation is relative to the robot
+ 
+  //***DEPRICATED CODE :)***
   /*
    * public static void polDrive(double ySpeed, double xSpeed, double rotationX,
    * double rotationY) { //calculates polar angle we need to rotate angle =
@@ -66,33 +66,13 @@ public class Drivetrain extends SubsystemBase {
    * //drives the freakin thing mecanumDrive.driveCartesian(ySpeed, xSpeed,
    * rotPower, gyroscope.getAngle()); }
    */
+  //****************************
 
   public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY) {
     double calculatedGyroAngle = (gyroscope.getAngle() % 360);
     if (calculatedGyroAngle > 180) {
       calculatedGyroAngle -= 360;
     }
-=======
-  //Angles are measured clockwise from the positive X axis. The robot's speed is independent from its angle or rotation rate.
-  //Gyro is feild oreintation while zRotation is relative to the robot
-  /*public static void polDrive(double ySpeed, double xSpeed, double rotationX, double rotationY)
-  {
-    //calculates polar angle we need to rotate
-    angle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI);
-    //converts that angle to a 1 to -1 value
-    double rotPower = (angle - 180) / 180;
-
-    //drives the freakin thing
-    mecanumDrive.driveCartesian(ySpeed, xSpeed, rotPower, gyroscope.getAngle());
-  }*/
-
-  public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY)
-  {
-    /* In case of a switch back to analog
-    double calculatedGyroAngle = (gyroscope.getAngle() % 360);
-    if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}*/
-    double calculatedGyroAngle = gyroscope.getYaw();
->>>>>>> 92b2bf1bad1c8d338d5cbb0d09e7a7521de5b9b0
 
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
 
@@ -133,17 +113,27 @@ public class Drivetrain extends SubsystemBase {
     backRightMotor.set(forwardSpeed + rotPow);
   }
 
-  public static void ultraMegaTurningMethod(double angle) {
-    boolean rotateToAngle = false;
+  public static void chadClassicTankDrive(double rightY, double leftY, double leftX, boolean trigger)
+  {
+    targetAngle = Math.toDegrees(Math.atan2(leftY, leftX) + Math.PI);
+    if (trigger)
+    {
+      ultraMegaTurningMethod(targetAngle);
+    }
+    differentialDrive.tankDrive(leftY, rightY);
 
-    gyroscope.reset();
-    angleController.setSetpoint((float) angle);
-      rotateToAngle = true;
-    double currentRotationRate;
-    if (rotateToAngle) {
-      currentRotationRate = MathUtil.clamp(angleController.calculate(gyroscope.getAngle()), -1.0, 1.0);
   }
 
+  public static void ultraMegaTurningMethod(double angle) {
+      
+      
+      angleController.setSetpoint(angle);
+      rotateToAngleRate = 0; // This value will be updated by the PID Controller
+    
+      rotateToAngleRate = MathUtil.clamp(angleController.calculate(gyroscope.getAngle()), -1.0, 1.0);
+      differentialDrive.tankDrive(rotateToAngleRate, rotateToAngleRate);
+
+  }
   @Override
   public void periodic() 
   {
