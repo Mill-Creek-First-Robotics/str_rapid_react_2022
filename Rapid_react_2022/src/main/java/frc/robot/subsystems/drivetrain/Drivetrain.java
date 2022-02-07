@@ -45,17 +45,9 @@ public class Drivetrain extends SubsystemBase {
     final double kP = 0.0;
     final double kI = 0.0;
     final double kD = 0.0;
-    final double tolerance = 2.0;
-<<<<<<< HEAD
-    angleController = new PIDController(kP, kI, kD, gyroscope, this);
-    angleController.setInputRange(-180.0f, 180.0f);
-    angleController.setOutputRange(-1.0, 1.0);
-    angleController.setAbsoluteTolerance(tolerance);
-=======
+    final double tolerance = 2.0; 
+   
     PIDController angleController = new PIDController(kP, kI, kD);
-
-
->>>>>>> c27d00b5631b929063b9bb4c7270bac30ebf8b3a
 
     //mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
   }
@@ -79,10 +71,6 @@ public class Drivetrain extends SubsystemBase {
     double calculatedGyroAngle = (gyroscope.getAngle() % 360);
     if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}*/
     double calculatedGyroAngle = gyroscope.getYaw();
-<<<<<<< HEAD
-//>>>>>>> 92b2bf1bad1c8d338d5cbb0d09e7a7521de5b9b0
-=======
->>>>>>> c27d00b5631b929063b9bb4c7270bac30ebf8b3a
 
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
 
@@ -117,20 +105,7 @@ public class Drivetrain extends SubsystemBase {
 
   public static void ultraMegaTurningMethod(double angle)
   {
-    
-    
 
-<<<<<<< HEAD
-    gyroscope.reset();
-    angleController.setSetpoint((float) angle);
-      rotateToAngle = true;
-    double currentRotationRate;
-    if (rotateToAngle) {
-      //angleController.enable();
-      currentRotationRate = MathUtil.clamp(angleController.calculate(gyroscope.getAngle()), -1.0, 1.0);
-=======
->>>>>>> c27d00b5631b929063b9bb4c7270bac30ebf8b3a
-  }
   }
 
   @Override
