@@ -92,7 +92,7 @@ public class Drivetrain extends SubsystemBase {
     double calculatedGyroAngle = (gyroscope.getAngle() % 360);
     if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}*/
     double calculatedGyroAngle = gyroscope.getYaw();
->>>>>>> 92b2bf1bad1c8d338d5cbb0d09e7a7521de5b9b0
+//>>>>>>> 92b2bf1bad1c8d338d5cbb0d09e7a7521de5b9b0
 
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
 
