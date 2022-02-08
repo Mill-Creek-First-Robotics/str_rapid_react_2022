@@ -5,6 +5,8 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpiutil.math.MathUtil;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -27,12 +29,14 @@ public class Drivetrain extends SubsystemBase {
   static double rotateToAngleRate;
   private static double targetAngle;
   static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
-  //static AnalogGyro gyroscope = new AnalogGyro(Constants.GYROSCOPE);
+  final double kP = 3.0;
+  final double kI = 2.0;
+  final double kD = 0.5;
+  static PIDController angleController = new PIDController(kP, kI, kD);
+  // static AnalogGyro gyroscope = new AnalogGyro(Constants.GYROSCOPE);
 
-
-  public Drivetrain() 
-  {
-    //calls da motors and gives dem da speed controllers but wit da different name
+  public Drivetrain() {
+    // calls da motors and gives dem da speed controllers but wit da different name
     frontLeftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR);
     backLeftMotor = new WPI_TalonSRX(Constants.BACK_LEFT_MOTOR);
     frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
@@ -41,20 +45,16 @@ public class Drivetrain extends SubsystemBase {
     SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRightMotor, backRightMotor);
     SpeedControllerGroup leftMotors = new SpeedControllerGroup(frontLeftMotor, backLeftMotor);
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
-    
-    final double kP = 0.0;
-    final double kI = 0.0;
-    final double kD = 0.0;
-    angleController = new PIDController(kP, kI, kD);
 
-    //mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
+    // mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor,
+    // frontRightMotor, backRightMotor);
   }
 
   // Angles are measured clockwise from the positive X axis. The robot's speed is
   // independent from its angle or rotation rate.
   // Gyro is feild oreintation while zRotation is relative to the robot
- 
-  //***DEPRICATED CODE :)***
+
+  // ***DEPRICATED CODE :)***
   /*
    * public static void polDrive(double ySpeed, double xSpeed, double rotationX,
    * double rotationY) { //calculates polar angle we need to rotate angle =
@@ -64,7 +64,7 @@ public class Drivetrain extends SubsystemBase {
    * //drives the freakin thing mecanumDrive.driveCartesian(ySpeed, xSpeed,
    * rotPower, gyroscope.getAngle()); }
    */
-  //****************************
+  // ****************************
 
   public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY) {
     double calculatedGyroAngle = (gyroscope.getAngle() % 360);
@@ -75,8 +75,11 @@ public class Drivetrain extends SubsystemBase {
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
 
     double turnLimiter;
-    if(forwardSpeed == 0){turnLimiter = motorLimiter;}
-    else{turnLimiter = 1 - motorLimiter;}
+    if (forwardSpeed == 0) {
+      turnLimiter = motorLimiter;
+    } else {
+      turnLimiter = 1 - motorLimiter;
+    }
     double rotPow = (targetAngle / 180) * turnLimiter;
 
     frontLeftMotor.set(forwardSpeed - rotPow);
@@ -85,17 +88,19 @@ public class Drivetrain extends SubsystemBase {
     backRightMotor.set(forwardSpeed + rotPow);
   }
 
-  public static void supremeTankDrivePart2BattleOfTheWheels(double forwardSpeed, double speedLimit,  double rotationX, double rotationY)
-  {
+  public static void supremeTankDrivePart2BattleOfTheWheels(double forwardSpeed, double speedLimit, double rotationX,
+      double rotationY) {
     double calculatedGyroAngle = gyroscope.getYaw();
 
     targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
 
     double turnLimiter;
-    if(forwardSpeed == 0){turnLimiter = speedLimit;}
-    else{turnLimiter = 1 - speedLimit;}
+    if (forwardSpeed == 0) {
+      turnLimiter = speedLimit;
+    } else {
+      turnLimiter = 1 - speedLimit;
+    }
     double rotPow = (targetAngle / 180) * turnLimiter;
-
 
     frontLeftMotor.set(forwardSpeed - rotPow);
     backLeftMotor.set(forwardSpeed - rotPow);
@@ -103,11 +108,9 @@ public class Drivetrain extends SubsystemBase {
     backRightMotor.set(forwardSpeed + rotPow);
   }
 
-  public static void chadClassicTankDrive(double rightY, double leftY, double leftX, boolean trigger)
-  {
+  public static void chadClassicTankDrive(double rightY, double leftY, double leftX, boolean trigger) {
     targetAngle = Math.toDegrees(Math.atan2(leftY, leftX) + Math.PI);
-    if (trigger)
-    {
+    if (trigger) {
       ultraMegaTurningMethod(targetAngle);
     }
     differentialDrive.tankDrive(leftY, rightY);
@@ -115,9 +118,8 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public static void ultraMegaTurningMethod(double angle) {
-      
-      
-      angleController.setSetpoint(angle);
+
+    angleController.setSetpoint(angle);
       rotateToAngleRate = 0; // This value will be updated by the PID Controller
     
       rotateToAngleRate = MathUtil.clamp(angleController.calculate(gyroscope.getAngle()), -1.0, 1.0);
