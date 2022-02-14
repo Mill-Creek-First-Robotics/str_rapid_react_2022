@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta charset="utf-8">
+        <title>BRUH</title>
+        <script type="text/javascript">
+        	function getRandomInt(max) {
+	  			return Math.floor(Math.random() * Math.floor(max));
+			}
+			function CalculateDistanceBetween2P(){
+				var total = 0;
+				var x1 = parseInt(document.getElementById("X1").value);
+                var x2 = parseInt(document.getElementById("X2").value);
+                var y1 = parseInt(document.getElementById("Y1").value);
+                var y2 = parseInt(document.getElementById("Y2").value);
+                var z1 = parseInt(document.getElementById("Z1").value);
+                var z2 = parseInt(document.getElementById("Z2").value);
+
+                total = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2) + Math.pow(z2 - z1, 2));
+
+				document.getElementById("totalOutput").innerHTML = "Total:" + total;
+			}
+        </script>
+        <style>
+            .center{text-align:center;}
+            .child {
+                display: inline-block;
+            }
+            .parent {
+                white-space: nowrap;
+                overflow-x: auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1 class="center">Distance Between Two Points</h1>
+		<br>
+		<br>
+		<label for="X1">Point 1: (</label>
+		<input type="number" class="parent" id="X1" name="X1"><p class="child">,</p><input type="number" class="child" id="Y1" name="Y1"><p class="child">,</p><input type="number" class="child" id="Z1" name="Z1"><p class="child">)</p><br><br>
+		<label for="X2">Point 2: (</label>
+		<input type="number" class="parent" id="X2" name="X2"><p class="child">,</p><input type="number" class="child" id="Y2" name="Y2"><p class="child">,</p><input type="number" class="child" id="Z2" name="Z2"><p class="child">)</p><br><br>
+		<button type="button" onclick="CalculateDistanceBetween2P()" value="Click">Calculate</button>
+		<h2 id="totalOutput" class="center">Distance:</h2>
+    </body>
+</html>
+

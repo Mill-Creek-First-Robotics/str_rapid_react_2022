@@ -5,17 +5,17 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpiutil.math.MathUtil;
+import edu.wpi.first.math.MathUtil;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.math.controller.PIDController;
+//import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.motorcontrol.*;
 
 public class Drivetrain extends SubsystemBase {
 
@@ -27,7 +27,7 @@ public class Drivetrain extends SubsystemBase {
   public static MecanumDrive mecanumDrive;
   public static DifferentialDrive differentialDrive;
   private static double targetAngle;
-  static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
+  //static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
   static PIDController angleController;
   // static AnalogGyro gyroscope = new AnalogGyro(Constants.GYROSCOPE);
 
@@ -38,8 +38,8 @@ public class Drivetrain extends SubsystemBase {
     frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
     backRightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR);
 
-    SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRightMotor, backRightMotor);
-    SpeedControllerGroup leftMotors = new SpeedControllerGroup(frontLeftMotor, backLeftMotor);
+    MotorControllerGroup rightMotors = new MotorControllerGroup(frontRightMotor, backRightMotor);
+    MotorControllerGroup leftMotors = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
 
     final double kP = 0.0;
