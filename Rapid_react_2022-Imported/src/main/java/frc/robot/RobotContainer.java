@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+//import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -38,8 +38,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     final XboxController m_log = new XboxController(Constants.CONTROLLER);
 
-    //Drivetrain.supremeTankDrive(m_log.getY(Hand.kLeft), m_log.getX(Hand.kRight), m_log.getY(Hand.kRight));
-    Drivetrain.classicDrive(m_log.getY(Hand.kLeft), m_log.getY(Hand.kRight));
+    //Drivetrain.supremeTankDrive(m_log.getLeftY(), m_log.getRightX(), m_log.getRightY());
+    Drivetrain.classicDrive(m_log.getLeftY(), m_log.getRightY());
   }
 
   /**
