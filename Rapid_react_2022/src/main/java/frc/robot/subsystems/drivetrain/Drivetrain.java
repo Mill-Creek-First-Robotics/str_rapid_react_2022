@@ -28,7 +28,14 @@ public class Drivetrain extends SubsystemBase {
   public static DifferentialDrive differentialDrive;
   private static double targetAngle;
   static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
+<<<<<<< HEAD
+  final double kP = 3.0;
+  final double kI = 2.0;
+  final double kD = 0.5;
+  static PIDController angleController = new PIDController(kP, kI, kD);
+=======
   static PIDController angleController;
+>>>>>>> d9c93bb9070c31b48c4736067eb3539fa57e8cb6
   // static AnalogGyro gyroscope = new AnalogGyro(Constants.GYROSCOPE);
 
   public Drivetrain() {
@@ -41,17 +48,39 @@ public class Drivetrain extends SubsystemBase {
     SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRightMotor, backRightMotor);
     SpeedControllerGroup leftMotors = new SpeedControllerGroup(frontLeftMotor, backLeftMotor);
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
+<<<<<<< HEAD
+=======
 
     final double kP = 0.0;
     final double kI = 0.0;
     final double kD = 0.0;
     final double tolerance = 2.0;
     angleController = new PIDController(kP, kI, kD);
+>>>>>>> d9c93bb9070c31b48c4736067eb3539fa57e8cb6
 
     // mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor,
     // frontRightMotor, backRightMotor);
   }
 
+<<<<<<< HEAD
+  // Angles are measured clockwise from the positive X axis. The robot's speed is
+  // independent from its angle or rotation rate.
+  // Gyro is feild oreintation while zRotation is relative to the robot
+
+  // ***DEPRICATED CODE :)***
+  /*
+   * public static void polDrive(double ySpeed, double xSpeed, double rotationX,
+   * double rotationY) { //calculates polar angle we need to rotate angle =
+   * Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI); //converts that
+   * angle to a 1 to -1 value double rotPower = (angle - 180) / 180;
+   * 
+   * //drives the freakin thing mecanumDrive.driveCartesian(ySpeed, xSpeed,
+   * rotPower, gyroscope.getAngle()); }
+   */
+  // ****************************
+
+  public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY) {
+=======
   //Angles are measured clockwise from the positive X axis. The robot's speed is independent from its angle or rotation rate.
   //Gyro is feild oreintation while zRotation is relative to the robot
   /*public static void polDrive(double ySpeed, double xSpeed, double rotationX, double rotationY)
@@ -68,6 +97,7 @@ public class Drivetrain extends SubsystemBase {
   public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY)
   {
     /* In case of a switch back to analog
+>>>>>>> d9c93bb9070c31b48c4736067eb3539fa57e8cb6
     double calculatedGyroAngle = (gyroscope.getAngle() % 360);
     if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
     double calculatedGyroAngle = gyroscope.getYaw();
