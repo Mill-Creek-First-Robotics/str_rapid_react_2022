@@ -22,6 +22,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final Drivetrain m_drivetrain = new Drivetrain();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -39,7 +40,7 @@ public class RobotContainer {
     final XboxController m_log = new XboxController(Constants.CONTROLLER);
 
     //Drivetrain.supremeTankDrive(m_log.getLeftY(), m_log.getRightX(), m_log.getRightY());
-    Drivetrain.classicDrive(m_log.getLeftY(), m_log.getRightY());
+    m_drivetrain.classicDrive(m_log.getLeftY(), m_log.getRightY());
   }
 
   /**

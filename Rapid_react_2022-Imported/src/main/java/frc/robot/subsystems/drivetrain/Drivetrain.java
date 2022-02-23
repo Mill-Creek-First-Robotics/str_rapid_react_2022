@@ -5,7 +5,6 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.math.MathUtil;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -14,19 +13,18 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
 import edu.wpi.first.math.controller.PIDController;
 //import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.motorcontrol.*;
 
 public class Drivetrain extends SubsystemBase {
 
   static double motorLimiter = 0.5;
-  static WPI_TalonSRX frontLeftMotor = null;
-  static WPI_TalonSRX backLeftMotor = null;
-  static WPI_TalonSRX frontRightMotor = null;
-  static WPI_TalonSRX backRightMotor = null;
+  static WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR);
+  static WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(Constants.BACK_LEFT_MOTOR);
+  static WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
+  static WPI_TalonSRX backRightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR);
   public static MecanumDrive mecanumDrive;
   public static DifferentialDrive differentialDrive;
-  private static double targetAngle;
+
   //static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
   static PIDController angleController;
   // static AnalogGyro gyroscope = new AnalogGyro(Constants.GYROSCOPE);
@@ -45,7 +43,6 @@ public class Drivetrain extends SubsystemBase {
     final double kP = 0.0;
     final double kI = 0.0;
     final double kD = 0.0;
-    final double tolerance = 2.0;
     angleController = new PIDController(kP, kI, kD);
 
     // mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor,
@@ -113,7 +110,7 @@ public class Drivetrain extends SubsystemBase {
 */
   public static void classicDrive(double leftY, double rightY)
   {
-    differentialDrive.tankDrive(leftY, rightY);
+    differentialDrive.tankDrive(leftY, -rightY);
   }
 
 /*
