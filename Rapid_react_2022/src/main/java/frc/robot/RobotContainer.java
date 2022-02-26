@@ -7,7 +7,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
+//import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +22,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private final Drivetrain m_drivetrain = new Drivetrain();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -38,8 +39,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     final XboxController m_log = new XboxController(Constants.CONTROLLER);
 
-    //Drivetrain.supremeTankDrive(m_log.getY(Hand.kLeft), m_log.getX(Hand.kRight), m_log.getY(Hand.kRight));
-    Drivetrain.classicDrive(m_log.getY(Hand.kLeft), m_log.getY(Hand.kRight));
+    //Drivetrain.supremeTankDrive(m_log.getLeftY(), m_log.getRightX(), m_log.getRightY());
+    m_drivetrain.classicDrive(m_log.getLeftY() * .5, m_log.getRightY() * .5);
+    //m_drivetrain.classicDrive(0.5, 0.5);
   }
 
   /**

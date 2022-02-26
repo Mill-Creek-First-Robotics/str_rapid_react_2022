@@ -5,37 +5,28 @@
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpiutil.math.MathUtil;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import frc.robot.Constants;
-import edu.wpi.first.wpilibj.controller.PIDController;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.math.controller.PIDController;
+//import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.motorcontrol.*;
 
 public class Drivetrain extends SubsystemBase {
 
   static double motorLimiter = 0.5;
-  static WPI_TalonSRX frontLeftMotor = null;
-  static WPI_TalonSRX backLeftMotor = null;
-  static WPI_TalonSRX frontRightMotor = null;
-  static WPI_TalonSRX backRightMotor = null;
+  static WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR);
+  static WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(Constants.BACK_LEFT_MOTOR);
+  static WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
+  static WPI_TalonSRX backRightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR);
   public static MecanumDrive mecanumDrive;
   public static DifferentialDrive differentialDrive;
-  private static double targetAngle;
-  static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
-<<<<<<< HEAD
-  final double kP = 3.0;
-  final double kI = 2.0;
-  final double kD = 0.5;
-  static PIDController angleController = new PIDController(kP, kI, kD);
-=======
+
+  //static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
   static PIDController angleController;
->>>>>>> d9c93bb9070c31b48c4736067eb3539fa57e8cb6
   // static AnalogGyro gyroscope = new AnalogGyro(Constants.GYROSCOPE);
 
   public Drivetrain() {
@@ -45,42 +36,19 @@ public class Drivetrain extends SubsystemBase {
     frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
     backRightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR);
 
-    SpeedControllerGroup rightMotors = new SpeedControllerGroup(frontRightMotor, backRightMotor);
-    SpeedControllerGroup leftMotors = new SpeedControllerGroup(frontLeftMotor, backLeftMotor);
+    MotorControllerGroup rightMotors = new MotorControllerGroup(frontRightMotor, backRightMotor);
+    MotorControllerGroup leftMotors = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
-<<<<<<< HEAD
-=======
 
     final double kP = 0.0;
     final double kI = 0.0;
     final double kD = 0.0;
-    final double tolerance = 2.0;
     angleController = new PIDController(kP, kI, kD);
->>>>>>> d9c93bb9070c31b48c4736067eb3539fa57e8cb6
 
     // mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor,
     // frontRightMotor, backRightMotor);
   }
 
-<<<<<<< HEAD
-  // Angles are measured clockwise from the positive X axis. The robot's speed is
-  // independent from its angle or rotation rate.
-  // Gyro is feild oreintation while zRotation is relative to the robot
-
-  // ***DEPRICATED CODE :)***
-  /*
-   * public static void polDrive(double ySpeed, double xSpeed, double rotationX,
-   * double rotationY) { //calculates polar angle we need to rotate angle =
-   * Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI); //converts that
-   * angle to a 1 to -1 value double rotPower = (angle - 180) / 180;
-   * 
-   * //drives the freakin thing mecanumDrive.driveCartesian(ySpeed, xSpeed,
-   * rotPower, gyroscope.getAngle()); }
-   */
-  // ****************************
-
-  public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY) {
-=======
   //Angles are measured clockwise from the positive X axis. The robot's speed is independent from its angle or rotation rate.
   //Gyro is feild oreintation while zRotation is relative to the robot
   /*public static void polDrive(double ySpeed, double xSpeed, double rotationX, double rotationY)
@@ -97,7 +65,6 @@ public class Drivetrain extends SubsystemBase {
   public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY)
   {
     /* In case of a switch back to analog
->>>>>>> d9c93bb9070c31b48c4736067eb3539fa57e8cb6
     double calculatedGyroAngle = (gyroscope.getAngle() % 360);
     if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
     double calculatedGyroAngle = gyroscope.getYaw();
@@ -143,7 +110,7 @@ public class Drivetrain extends SubsystemBase {
 */
   public static void classicDrive(double leftY, double rightY)
   {
-    differentialDrive.tankDrive(leftY, rightY);
+    differentialDrive.tankDrive(leftY, -rightY);
   }
 
 /*
