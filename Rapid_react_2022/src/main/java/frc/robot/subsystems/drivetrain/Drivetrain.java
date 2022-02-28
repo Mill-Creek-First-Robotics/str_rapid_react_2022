@@ -115,16 +115,29 @@ public class Drivetrain extends SubsystemBase {
     differentialDrive.tankDrive(leftY, -rightY);
   }
 
+  public static void chadDrive(double leftY,double rightY,double rightX,boolean button)
+  {
+
+    if(button)
+    {
+      targetAngle = Math.toDegrees(Math.atan2(rightY, rightX) + Math.PI);
+      ultraMegaTurningMethod(targetAngle);
+    }
+    differentialDrive.tankDrive(leftY, rightY);
+  }
+
 
   public static void ultraMegaTurningMethod(double angle) {
     boolean rotateToAngle = false;
 
-    gyroscope.reset();
     angleController.setSetpoint((float) angle);
-      rotateToAngle = true;
-    double currentRotationRate;
-    if (rotateToAngle) {
-      currentRotationRate = MathUtil.clamp(angleController.calculate(gyroscope.getAngle()), -1.0, 1.0);}
+    rotateToAngle = true;
+    double currentRotationRate = 0;
+    if (rotateToAngle) 
+    {
+      currentRotationRate = MathUtil.clamp(angleController.calculate(gyroscope.getAngle()), -1.0, 1.0);
+    }
+    differentialDrive.tankDrive(currentRotationRate, currentRotationRate);
   }
 
   @Override
