@@ -27,6 +27,7 @@ public class Drivetrain extends SubsystemBase {
   public static MecanumDrive mecanumDrive;
   public static DifferentialDrive differentialDrive;
   private static double targetAngle;
+  private static double currentRotationRate;
 
   static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
   static PIDController angleController;
@@ -42,10 +43,12 @@ public class Drivetrain extends SubsystemBase {
     MotorControllerGroup rightMotors = new MotorControllerGroup(frontRightMotor, backRightMotor);
     MotorControllerGroup leftMotors = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);  
-    final double kP = 0.0;
-    final double kI = 0.0;
-    final double kD = 0.0;
+    final double kP = .03;
+    final double kI = 0;
+    final double kD = 0;
+    
     angleController = new PIDController(kP, kI, kD);
+    angleController.setTolerance(2);
 
     // mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor,
     // frontRightMotor, backRightMotor);
@@ -67,11 +70,11 @@ public class Drivetrain extends SubsystemBase {
   public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY)
   {
     // In case of a switch back to analog
-    double calculatedGyroAngle = (gyroscope.getAngle() % 360);
-    if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
-    calculatedGyroAngle = gyroscope.getYaw();
+    //double calculatedGyroAngle = (gyroscope.getAngle() % 360);
+    //if (calculatedGyroAngle > 180){calculatedGyroAngle -= 360;}
+    double calculatedGyroAngle = gyroscope.getYaw();
 
-    targetAngle = Math.toDegrees(Math.atan2(rotationY, rotationX) + Math.PI) - calculatedGyroAngle;
+    targetAngle = Math.toDegrees(Math.atan2(rotationX, rotationY) + Math.PI) - calculatedGyroAngle;
 
     double turnLimiter;
     if (forwardSpeed == 0) {
@@ -79,12 +82,13 @@ public class Drivetrain extends SubsystemBase {
     } else {
       turnLimiter = 1 - motorLimiter;
     }
+    turnLimiter = 1 - motorLimiter;
     double rotPow = (targetAngle / 180) * turnLimiter;
 
-    frontLeftMotor.set(forwardSpeed - rotPow);
-    backLeftMotor.set(forwardSpeed - rotPow);
-    frontRightMotor.set(forwardSpeed + rotPow);
-    backRightMotor.set(forwardSpeed + rotPow);
+    frontLeftMotor.set(-forwardSpeed * 0 + rotPow * 0.7);
+    backLeftMotor.set(-forwardSpeed* 0 + rotPow * 0.7);
+    frontRightMotor.set(forwardSpeed* 0 + rotPow * 0.7);
+    backRightMotor.set(forwardSpeed* 0 + rotPow * 0.7);
   }
 
   public static void supremeTankDrivePart2BattleOfTheWheels(double forwardSpeed, double speedLimit, double rotationX,
@@ -121,23 +125,40 @@ public class Drivetrain extends SubsystemBase {
     if(button)
     {
       targetAngle = Math.toDegrees(Math.atan2(rightY, rightX) + Math.PI);
+      System.out.println(targetAngle);
       ultraMegaTurningMethod(targetAngle);
     }
-    differentialDrive.tankDrive(leftY, rightY);
+    else
+    {
+      differentialDrive.arcadeDrive(leftY, rightX);
+      currentRotationRate = 0;
+    }
+  }
+  public static void zeroGyro(boolean button)
+  {
+    gyroscope.zeroYaw();
   }
 
+  public static void calibrate(boolean button)
+  {
+    gyroscope.calibrate();
+  }
 
   public static void ultraMegaTurningMethod(double angle) {
-    boolean rotateToAngle = false;
+    System.out.println("UMTM has been called");
+    
+      if(gyroscope.getYaw() > Math.floor(angle) && gyroscope.getYaw() < Math.ceil(angle))
+      {
+        currentRotationRate = 0;
+        return;
+      }
 
-    angleController.setSetpoint((float) angle);
-    rotateToAngle = true;
-    double currentRotationRate = 0;
-    if (rotateToAngle) 
-    {
-      currentRotationRate = MathUtil.clamp(angleController.calculate(gyroscope.getAngle()), -1.0, 1.0);
-    }
-    differentialDrive.tankDrive(currentRotationRate, currentRotationRate);
+      angleController.setSetpoint((float) angle);
+      System.out.println(angle);
+      System.out.println(gyroscope.getYaw());
+      currentRotationRate = MathUtil.clamp(angleController.calculate(gyroscope.getYaw()), -1, 1);
+      differentialDrive.tankDrive(currentRotationRate, currentRotationRate);
+    
   }
 
   @Override

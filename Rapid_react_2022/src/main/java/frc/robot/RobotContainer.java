@@ -40,7 +40,7 @@ public class RobotContainer {
     final XboxController m_log = new XboxController(Constants.CONTROLLER);
 
     //Drivetrain.supremeTankDrive(m_log.getLeftY(), m_log.getRightX(), m_log.getRightY());
-    m_drivetrain.classicDrive(m_log.getLeftY() * .5, m_log.getRightY() * .5);
+    //m_drivetrain.classicDrive(m_log.getLeftY() * .5, m_log.getRightY() * .5);
     //m_drivetrain.classicDrive(0.5, 0.5);
   }
 
