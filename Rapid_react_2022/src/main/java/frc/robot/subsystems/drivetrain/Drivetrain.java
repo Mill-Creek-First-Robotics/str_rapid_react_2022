@@ -67,6 +67,12 @@ public class Drivetrain extends SubsystemBase {
     mecanumDrive.driveCartesian(ySpeed, xSpeed, rotPower, gyroscope.getAngle());
   }
 
+  /**STD()
+   * variation of tankdrive that uses a home-made PID system, still in development
+   * @param forwardSpeed
+   * @param rotationX
+   * @param rotationY
+   */
   public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY)
   {
     // In case of a switch back to analog
@@ -90,7 +96,14 @@ public class Drivetrain extends SubsystemBase {
     frontRightMotor.set(forwardSpeed* 0 + rotPow * 0.7);
     backRightMotor.set(forwardSpeed* 0 + rotPow * 0.7);
   }
-
+  /**STDP2BoTW()
+   * copy of STD
+   * 
+   * @param forwardSpeed
+   * @param speedLimit
+   * @param rotationX
+   * @param rotationY
+   */
   public static void supremeTankDrivePart2BattleOfTheWheels(double forwardSpeed, double speedLimit, double rotationX,
       double rotationY) {
     double calculatedGyroAngle = (gyroscope.getAngle() % 360);
@@ -114,11 +127,24 @@ public class Drivetrain extends SubsystemBase {
     backRightMotor.set(forwardSpeed + rotPow);
   }
 
+  /**classicDrive()
+   * simple tankdrive method
+   * @param leftY Left Y axis
+   * @param rightY right Y axis
+   */
   public static void classicDrive(double leftY, double rightY)
   {
     differentialDrive.tankDrive(leftY, -rightY);
   }
 
+  /**chadDrive()
+   * adds a function to either the normal "tankdrive" mode or the "arcade" mode depending
+   * on driver's preference
+   * @param leftY Y axis of the left thumbstick/joystick
+   * @param rightY Y axis of the right thumbstick/joystick
+   * @param rightX X axis of the right thumbstick/joystick
+   * @param button button that rotates the robot to a designated angle
+   */
   public static void chadDrive(double leftY,double rightY,double rightX,boolean button)
   {
 
@@ -130,20 +156,34 @@ public class Drivetrain extends SubsystemBase {
     }
     else
     {
+      differentialDrive.tankDrive(-leftY, rightY);
       differentialDrive.arcadeDrive(leftY, rightX);
       currentRotationRate = 0;
     }
   }
+
+  /**zeroGyro()
+   * sets a button 
+   * @param button button that is used
+   */
   public static void zeroGyro(boolean button)
   {
     gyroscope.zeroYaw();
   }
 
+  /**calibrate()
+   * 
+   * @param button button that is used
+   */
   public static void calibrate(boolean button)
   {
     gyroscope.calibrate();
   }
 
+  /** UMTM
+   * responsible for rotating the robot to a designated angle 
+   * @param angle sets the setpoint for the PID system
+   */
   public static void ultraMegaTurningMethod(double angle) {
     System.out.println("UMTM has been called");
     
