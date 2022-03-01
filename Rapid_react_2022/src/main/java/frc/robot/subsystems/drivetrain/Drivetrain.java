@@ -43,7 +43,7 @@ public class Drivetrain extends SubsystemBase {
     MotorControllerGroup rightMotors = new MotorControllerGroup(frontRightMotor, backRightMotor);
     MotorControllerGroup leftMotors = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);  
-    final double kP = .03;
+    final double kP = .003;
     final double kI = 0;
     final double kD = 0;
     
@@ -156,8 +156,8 @@ public class Drivetrain extends SubsystemBase {
     }
     else
     {
-      differentialDrive.tankDrive(-leftY, rightY);
-      differentialDrive.arcadeDrive(leftY, rightX);
+      differentialDrive.tankDrive(leftY, rightY);
+      //differentialDrive.arcadeDrive(leftY, rightX);
       currentRotationRate = 0;
     }
   }
@@ -168,7 +168,8 @@ public class Drivetrain extends SubsystemBase {
    */
   public static void zeroGyro(boolean button)
   {
-    gyroscope.zeroYaw();
+    if(button)
+      gyroscope.zeroYaw();
   }
 
   /**calibrate()
@@ -177,7 +178,8 @@ public class Drivetrain extends SubsystemBase {
    */
   public static void calibrate(boolean button)
   {
-    gyroscope.calibrate();
+    if(button)
+      gyroscope.calibrate();
   }
 
   /** UMTM
