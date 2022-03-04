@@ -6,7 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.subsystems.drivetrain.Drivetrain;
+import frc.robot.subsystems.drivetrain.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 /*
@@ -19,6 +19,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private ChadDrive m_chadDrive = new ChadDrive();
   private Drivetrain m_drivetrain = new Drivetrain();
   private XboxController stick = new XboxController(Constants.CONTROLLER);
   /**
@@ -88,9 +89,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //m_drivetrain.classicDrive(-stick.getLeftY() * .9, -stick.getRightY() * .9);
-    m_drivetrain.chadDrive(stick.getLeftY() * -.5, stick.getRightY() * .5, stick.getPOV(), stick.getRawButton(5));
-    m_drivetrain.zeroGyro(stick.getRawButton(2));
-    m_drivetrain.calibrate(stick.getRawButton(3));
+    m_chadDrive.chadDrive(stick.getLeftY() * -.5, stick.getRightY() * .5, stick.getPOV(), stick.getRawButton(5));
+    m_chadDrive.zeroGyro(stick.getRawButton(2));
+    m_chadDrive.calibrate(stick.getRawButton(3));
     //m_drivetrain.supremeTankDrive(stick.getLeftY(), stick.getRightX(), stick.getRightY());    
   }
 
