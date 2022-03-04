@@ -43,12 +43,12 @@ public class Drivetrain extends SubsystemBase {
     MotorControllerGroup rightMotors = new MotorControllerGroup(frontRightMotor, backRightMotor);
     MotorControllerGroup leftMotors = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
     differentialDrive = new DifferentialDrive(leftMotors, rightMotors);  
-    final double kP = .003;
+    final double kP = .005;
     final double kI = 0;
     final double kD = 0;
     
     angleController = new PIDController(kP, kI, kD);
-    angleController.setTolerance(2);
+    angleController.setTolerance(.5);
 
     // mecanumDrive = new MecanumDrive(frontLeftMotor, backLeftMotor,
     // frontRightMotor, backRightMotor);
@@ -145,14 +145,15 @@ public class Drivetrain extends SubsystemBase {
    * @param rightX X axis of the right thumbstick/joystick
    * @param button button that rotates the robot to a designated angle
    */
-  public static void chadDrive(double leftY,double rightY,double rightX,boolean button)
+  public static void chadDrive(double leftY,double rightY,int POV,boolean button)
   {
 
     if(button)
     {
-      targetAngle = Math.toDegrees(Math.atan2(rightY, rightX) + Math.PI);
-      System.out.println(targetAngle);
-      ultraMegaTurningMethod(targetAngle);
+      
+      System.out.println(POV);
+      ultraMegaTurningMethod(POV);
+      
     }
     else
     {
@@ -188,12 +189,7 @@ public class Drivetrain extends SubsystemBase {
    */
   public static void ultraMegaTurningMethod(double angle) {
     System.out.println("UMTM has been called");
-    
-      if(gyroscope.getYaw() > Math.floor(angle) && gyroscope.getYaw() < Math.ceil(angle))
-      {
-        currentRotationRate = 0;
-        return;
-      }
+
 
       angleController.setSetpoint((float) angle);
       System.out.println(angle);

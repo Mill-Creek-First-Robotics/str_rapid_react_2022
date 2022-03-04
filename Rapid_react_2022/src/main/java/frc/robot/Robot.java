@@ -88,7 +88,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //m_drivetrain.classicDrive(-stick.getLeftY() * .9, -stick.getRightY() * .9);
-    m_drivetrain.chadDrive(stick.getLeftY() * -.5, stick.getRightY() * .5, stick.getRightX(), stick.getRawButton(1));
+    m_drivetrain.chadDrive(stick.getLeftY() * -.5, stick.getRightY() * .5, stick.getPOV(), stick.getRawButton(5));
     m_drivetrain.zeroGyro(stick.getRawButton(2));
     m_drivetrain.calibrate(stick.getRawButton(3));
     //m_drivetrain.supremeTankDrive(stick.getLeftY(), stick.getRightX(), stick.getRightY());    
