@@ -12,40 +12,35 @@ import frc.robot.Constants;
 public class Intake extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
-  //calls da roller motor and assigns it a speed controller
+  static // calls da roller motor and assigns it a speed controller
   double el_speed = 0.25;
-  WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
-  boolean toggled;
+  static WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
+  static boolean toggled;
 
-  public Intake() 
-  {
+  public Intake() {
     roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
     toggled = false;
   }
 
-
-  public void setSpeed(double speed)
-  {
-    //sets the roller motors speed
+  public void setSpeed(double speed) {
+    // sets the roller motors speed
     roller.set(speed);
   }
 
   public void inverseElSpeed() {
     el_speed = el_speed * -1;
-    if(toggled) {
+    if (toggled) {
       roller.set(el_speed);
     }
   }
 
-  public void updateToggle(boolean isPressed) {
-    //if toggle is pressed toggled is opposite of its original state
-    if(isPressed) {
-      toggled = !toggled;
-    }
+  public static void updateToggle() {
+    // if toggle is pressed toggled is opposite of its original state
+    toggled = !toggled;
 
     // if toggled is on it will set to default speed
-    //else toggled must be off and speed is zero
-    if(toggled) {
+    // else toggled must be off and speed is zero
+    if (toggled) {
       roller.set(el_speed);
     } else {
       roller.set(0);
