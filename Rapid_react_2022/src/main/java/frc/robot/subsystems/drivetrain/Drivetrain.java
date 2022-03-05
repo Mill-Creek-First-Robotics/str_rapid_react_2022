@@ -23,7 +23,8 @@ public class Drivetrain extends SubsystemBase {
   static WPI_TalonSRX backRightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR);
   public static MecanumDrive mecanumDrive;
   public static DifferentialDrive differentialDrive;
-  
+  private static boolean slowMode = false;
+
   public Drivetrain() {
     // calls da motors and gives dem da speed controllers but wit da different name
     frontLeftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR);
@@ -33,26 +34,40 @@ public class Drivetrain extends SubsystemBase {
 
     MotorControllerGroup rightMotors = new MotorControllerGroup(frontRightMotor, backRightMotor);
     MotorControllerGroup leftMotors = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
-    differentialDrive = new DifferentialDrive(leftMotors, rightMotors);  
-    
+    differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
 
   }
 
-  //Angles are measured clockwise from the positive X axis. The robot's speed is independent from its angle or rotation rate.
-  //Gyro is feild oreintation while zRotation is relative to the robot
+  // Angles are measured clockwise from the positive X axis. The robot's speed is
+  // independent from its angle or rotation rate.
+  // Gyro is feild oreintation while zRotation is relative to the robot
 
-
-  /**classicDrive()
-   * simple tankdrive method
-   * @param leftY Left Y axis
+  /**
+   * classicDrive() simple tankdrive method
+   * 
+   * @param leftY  Left Y axis
    * @param rightY right Y axis
    */
   public static void classicDrive(double leftY, double rightY)
   {
+    if (slowMode) {
+      differentialDrive.tankDrive(leftY * .5, rightY * .5);
+    }
     differentialDrive.tankDrive(leftY, -rightY);
   }
 
-  
+  public static void tuxDrive(double leftY, double rightX)
+  {
+    if(slowMode)
+      differentialDrive.arcadeDrive(leftY * .5, rightX * .5);
+    else
+      differentialDrive.arcadeDrive(leftY * .8, rightX * .8);
+  }
+
+  public static void toggleSlow()
+  {
+    slowMode = !slowMode;
+  }
 
   @Override
   public void periodic() 

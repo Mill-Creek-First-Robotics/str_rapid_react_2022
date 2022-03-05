@@ -29,9 +29,7 @@ public class Intake extends SubsystemBase {
 
   public void inverseElSpeed() {
     el_speed = el_speed * -1;
-    if (toggled) {
-      roller.set(el_speed);
-    }
+    roller.set(el_speed);
   }
 
   public static void updateToggle() {

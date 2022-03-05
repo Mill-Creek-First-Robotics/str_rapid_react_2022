@@ -5,12 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
-//import edu.wpi.first.wpilibj.GenericHID.Hand;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+//import edu.wpi.first.wpilibj.GenericHID.Hand;
+import frc.robot.commands.*;
+import frc.robot.commands.intake.ToggleMotor;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,9 +25,18 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final Drivetrain m_drivetrain = new Drivetrain();
-
+  private final Intake m_intake = new Intake();
+  final XboxController m_log = new XboxController(Constants.CONTROLLER);
+  
+  JoystickButton aButton = new JoystickButton(m_log, 1);
+  JoystickButton bButton = new JoystickButton(m_log, 2);
+  JoystickButton xButton = new JoystickButton(m_log, 3);
+  JoystickButton yButton = new JoystickButton(m_log, 4);
+  JoystickButton leftBumper = new JoystickButton(m_log, 5);
+  JoystickButton rightBumper = new JoystickButton(m_log, 6);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -36,12 +47,11 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-    final XboxController m_log = new XboxController(Constants.CONTROLLER);
-
-    //Drivetrain.supremeTankDrive(m_log.getLeftY(), m_log.getRightX(), m_log.getRightY());
-    //m_drivetrain.classicDrive(m_log.getLeftY() * .5, m_log.getRightY() * .5);
-    //m_drivetrain.classicDrive(0.5, 0.5);
+  private void configureButtonBindings() 
+  {
+    rightBumper.whenPressed(new toggleSlowMode(m_drivetrain));
+    bButton.whenPressed(new ToggleMotor(m_intake));
+    aButton,whenPressed(new )
   }
 
   /**
