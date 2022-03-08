@@ -20,6 +20,7 @@ public final class Constants
     public static final int FRONT_RIGHT_MOTOR = 4;
     public static final int BACK_RIGHT_MOTOR = 8;
     public static final int ROLLER_MOTOR = 5;
+    public static final int ARM_MOTOR = 7;
 
     // the ports of other stuff
     public static final int ENCODER = 6;
@@ -27,4 +28,8 @@ public final class Constants
 
     // ports of controllers
     public static final int CONTROLLER = 0;
+
+    //limit switches
+    public static final int TOP_SWITCH = 0;
+    public static final int BOTTOM_SWITCH = 1;
 }

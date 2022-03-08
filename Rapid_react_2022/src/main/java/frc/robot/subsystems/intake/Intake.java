@@ -6,6 +6,7 @@ package frc.robot.subsystems.intake;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -15,8 +16,11 @@ public class Intake extends SubsystemBase {
   static // calls da roller motor and assigns it a speed controller
   double el_speed = 0.25;
   static WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
+  static WPI_TalonSRX arm = new WPI_TalonSRX(Constants.ARM_MOTOR);
   static boolean toggled;
-
+  static boolean armPosition = 0;
+  static DigitalInput topSwitch = new DigitalInput(0);
+  static DigitalInput bottomSwitch = new DigitalInput(1);
   public Intake() {
     roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
     toggled = false;
@@ -44,6 +48,42 @@ public class Intake extends SubsystemBase {
       roller.set(0);
     }
   }
+
+  public static void raiseArm()
+  {
+    while(!(topSwitch.get()))
+    {
+      arm.set(.4);
+    }
+    if(topSwitch.get())
+    {
+      arm.set(0);
+    }
+  }
+  public static void lowerArm()
+  {
+    while(!(bottomSwitch.get()))
+    {
+      arm.set(-.4);
+    }
+    if(bottomSwitch.get())
+    {
+      arm.set(0);
+    }
+  }
+
+  public void switchArm()
+  {
+    if(armPosition)
+    {
+      lowerArm();
+    }
+    else
+    {
+      raiseArm();
+    }
+  }
+
 
   @Override
   public void periodic() {

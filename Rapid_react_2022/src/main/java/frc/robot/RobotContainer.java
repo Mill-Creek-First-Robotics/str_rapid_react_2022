@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.*;
-import frc.robot.commands.intake.ToggleMotor;
+import frc.robot.commands.intake.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -51,7 +51,7 @@ public class RobotContainer {
   {
     rightBumper.whenPressed(new toggleSlowMode(m_drivetrain));
     bButton.whenPressed(new ToggleMotor(m_intake));
-    aButton,whenPressed(new )
+    aButton,whenPressed(new SwitchArm(m_intake));
   }
 
   /**
