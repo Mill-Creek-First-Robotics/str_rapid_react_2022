@@ -62,17 +62,16 @@ public class Autonomous extends CommandBase {
     
     return false;
   }
-}
 
-
-private static void wait(int mili)
-{
-  try
-    {
-      Thread.sleep(mili);
-    }
-    catch(InterruptedException ex)
-    {
-      Thread.currentThread().interrupt();
-    }
+  private static void wait(int mili)
+  {
+    try
+     {
+        Thread.sleep(mili);
+      }
+      catch(InterruptedException ex)
+      {
+        Thread.currentThread().interrupt();
+     }
+  }
 }

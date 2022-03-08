@@ -18,7 +18,7 @@ public class Intake extends SubsystemBase {
   static WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
   static WPI_TalonSRX arm = new WPI_TalonSRX(Constants.ARM_MOTOR);
   static boolean toggled;
-  static boolean armPosition = 0;
+  static int armPosition = 0;
   static DigitalInput topSwitch = new DigitalInput(0);
   static DigitalInput bottomSwitch = new DigitalInput(1);
   public Intake() {
@@ -74,7 +74,7 @@ public class Intake extends SubsystemBase {
 
   public void switchArm()
   {
-    if(armPosition)
+    if(armPosition == 1)
     {
       lowerArm();
     }
