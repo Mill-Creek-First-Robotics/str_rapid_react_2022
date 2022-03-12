@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.drivetrain.*;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
@@ -26,15 +27,16 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final Drivetrain m_drivetrain = new Drivetrain();
+  private final ChadDrive m_chadDrive = new ChadDrive();
   private final Intake m_intake = new Intake();
-  final XboxController m_log = new XboxController(Constants.CONTROLLER);
+  final XboxController stick = new XboxController(Constants.CONTROLLER);
   
-  JoystickButton aButton = new JoystickButton(m_log, 1);
-  JoystickButton bButton = new JoystickButton(m_log, 2);
-  JoystickButton xButton = new JoystickButton(m_log, 3);
-  JoystickButton yButton = new JoystickButton(m_log, 4);
-  JoystickButton leftBumper = new JoystickButton(m_log, 5);
-  JoystickButton rightBumper = new JoystickButton(m_log, 6);
+  JoystickButton aButton = new JoystickButton(stick, 1);
+  JoystickButton bButton = new JoystickButton(stick, 2);
+  JoystickButton xButton = new JoystickButton(stick, 3);
+  JoystickButton yButton = new JoystickButton(stick, 4);
+  JoystickButton leftBumper = new JoystickButton(stick, 5);
+  JoystickButton rightBumper = new JoystickButton(stick, 6);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
@@ -50,9 +52,9 @@ public class RobotContainer {
    */
   private void configureButtonBindings() 
   {
+    
     rightBumper.whenPressed(new toggleSlowMode(m_drivetrain));
     bButton.whenPressed(new ToggleMotor(m_intake));
-    aButton.whenPressed(new SwitchArm(m_intake));
   }
 
   /**
