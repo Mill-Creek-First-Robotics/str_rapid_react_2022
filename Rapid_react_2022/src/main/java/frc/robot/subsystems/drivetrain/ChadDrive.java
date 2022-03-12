@@ -4,14 +4,13 @@
 
 package frc.robot.subsystems.drivetrain;
 
-import frc.robot.Constants;import frc.robot.Constants;
+import frc.robot.Constants;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ChadDrive extends SubsystemBase {
@@ -28,7 +27,7 @@ public class ChadDrive extends SubsystemBase {
     final double kD = 0;
     
     angleController = new PIDController(kP, kI, kD);
-    angleController.setTolerance(.5);
+    angleController.setTolerance(1);
   }
 
 /**chadDrive()
@@ -39,7 +38,7 @@ public class ChadDrive extends SubsystemBase {
    * @param rightX X axis of the right thumbstick/joystick
    * @param button button that rotates the robot to a designated angle
    */
-  public static void chadDrive(double leftY,double rightY,int POV,boolean button)
+  public static void chadDrive(double leftY,double rightY,int POV,boolean button, double rightX)
   {
 
     if(button)
@@ -51,8 +50,8 @@ public class ChadDrive extends SubsystemBase {
     }
     else
     {
-      Drivetrain.differentialDrive.tankDrive(leftY, rightY);
-      //differentialDrive.arcadeDrive(leftY, rightX);
+      //Drivetrain.differentialDrive.tankDrive(leftY, rightY);
+      Drivetrain.differentialDrive.arcadeDrive(rightX, leftY);
       currentRotationRate = 0;
     }
   }
@@ -69,8 +68,8 @@ public class ChadDrive extends SubsystemBase {
       angleController.setSetpoint((float) angle);
       System.out.println(angle);
       System.out.println(gyroscope.getYaw());
-      currentRotationRate = MathUtil.clamp(angleController.calculate(gyroscope.getYaw()), -1, 1);
-      Drivetrain.differentialDrive.tankDrive(currentRotationRate, currentRotationRate);
+      currentRotationRate = angleController.calculate(gyroscope.getYaw());
+      Drivetrain.differentialDrive.arcadeDrive(currentRotationRate, 0);
     
   }
  

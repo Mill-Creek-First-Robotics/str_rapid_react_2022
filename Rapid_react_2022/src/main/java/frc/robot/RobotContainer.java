@@ -25,10 +25,10 @@ import frc.robot.commands.intake.*;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final ChadDrive m_chadDrive = new ChadDrive();
   private final Intake m_intake = new Intake();
+  private final Autonomous m_autoCommand = new Autonomous(m_drivetrain,m_intake);
   final XboxController stick = new XboxController(Constants.CONTROLLER);
   
   JoystickButton aButton = new JoystickButton(stick, 1);
