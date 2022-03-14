@@ -17,24 +17,19 @@ import edu.wpi.first.wpilibj.motorcontrol.*;
 public class Drivetrain extends SubsystemBase {
 
 
-  static WPI_TalonSRX frontLeftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR);
+  static WPI_TalonSRX   frontLeftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR);
+
   static WPI_TalonSRX backLeftMotor = new WPI_TalonSRX(Constants.BACK_LEFT_MOTOR);
   static WPI_TalonSRX frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
   static WPI_TalonSRX backRightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR);
   public static MecanumDrive mecanumDrive;
-  public static DifferentialDrive differentialDrive;
   private static boolean slowMode = false;
-
+  public static MotorControllerGroup rightMotors = new MotorControllerGroup(frontRightMotor, backRightMotor);
+  static MotorControllerGroup leftMotors = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
+  public static DifferentialDrive differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
   public Drivetrain() {
     // calls da motors and gives dem da speed controllers but wit da different name
-    frontLeftMotor = new WPI_TalonSRX(Constants.FRONT_LEFT_MOTOR);
-    backLeftMotor = new WPI_TalonSRX(Constants.BACK_LEFT_MOTOR);
-    frontRightMotor = new WPI_TalonSRX(Constants.FRONT_RIGHT_MOTOR);
-    backRightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR);
-
-    MotorControllerGroup rightMotors = new MotorControllerGroup(frontRightMotor, backRightMotor);
-    MotorControllerGroup leftMotors = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
-    differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
+    
 
   }
 

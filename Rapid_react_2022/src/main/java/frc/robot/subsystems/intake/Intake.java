@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.intake;
 
+import javax.lang.model.util.ElementScanner6;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -72,15 +74,21 @@ public class Intake extends SubsystemBase {
     }
   }
 
-  public void switchArm()
+  public static void switchArm()
   {
+
     if(armPosition == 1)
     {
       lowerArm();
+      armPosition = 0;
     }
-    else
+    else if(armPosition == 0)
     {
       raiseArm();
+      armPosition = 1;
+    }
+    else{
+      System.out.println("¯\\_(ツ)_/¯");
     }
   }
 

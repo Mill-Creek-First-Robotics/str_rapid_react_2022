@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.subsystems.drivetrain.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.intake.Intake;
 /*
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -19,6 +20,7 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private Intake m_intake = new Intake();
   private ChadDrive m_chadDrive = new ChadDrive();
   private Drivetrain m_drivetrain = new Drivetrain();
   private XboxController stick = new XboxController(Constants.CONTROLLER);
@@ -89,9 +91,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     //m_drivetrain.classicDrive(-stick.getLeftY() * .9, -stick.getRightY() * .9);
-    m_chadDrive.chadDrive(stick.getLeftY() * -.5, stick.getRightY() * .5, stick.getPOV(), stick.getRawButton(5));
+    m_chadDrive.chadDrive(stick.getLeftY() * -.5, stick.getRightY() * .5, stick.getPOV(), stick.getRawButton(5), stick.getRightX() * .6);
     m_chadDrive.zeroGyro(stick.getRawButton(2));
     m_chadDrive.calibrate(stick.getRawButton(3));
+    if(stick.getRawButton(1))
+    {
+    Intake.switchArm();
+    }
     //m_drivetrain.supremeTankDrive(stick.getLeftY(), stick.getRightX(), stick.getRightY());    
   }
 
