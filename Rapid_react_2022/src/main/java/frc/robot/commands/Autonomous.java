@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.timer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -41,7 +42,7 @@ public class Autonomous extends CommandBase {
     Drivetrain.classicDrive(0, 0);
     Intake.updateToggle();
     Drivetrain.classicDrive(-1, -1);
-    new WaitCommand(1);
+    timer.sleep(1000);
     Drivetrain.classicDrive(0, 0);
 
     restartTimer();
