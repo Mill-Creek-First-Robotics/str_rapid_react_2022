@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+/*
 package frc.robot.subsystems.drivetrain;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,6 +24,8 @@ public class SupremeTankDrive extends SubsystemBase {
    * @param rotationX
    * @param rotationY
    */
+
+  /*
   public static void supremeTankDrive(double forwardSpeed, double rotationX, double rotationY)
   {
     // In case of a switch back to analog
@@ -54,7 +56,7 @@ public class SupremeTankDrive extends SubsystemBase {
    * @param speedLimit
    * @param rotationX
    * @param rotationY
-   */
+   
   public static void supremeTankDrivePart2BattleOfTheWheels(double forwardSpeed, double speedLimit, double rotationX,
       double rotationY) {
     double calculatedGyroAngle = (gyroscope.getAngle() % 360);
@@ -88,3 +90,4 @@ public class SupremeTankDrive extends SubsystemBase {
     // This method will be called once per scheduler run during simulation
   }
 }
+*/

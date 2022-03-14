@@ -17,6 +17,7 @@ public class Autonomous extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drivetrain m_drivetrain;
   private final Intake m_intake;
+  private long createdMillis = System.currentTimeMillis();
   boolean yes = true;
   /**
    * Creates a new ExampleCommand.
@@ -35,13 +36,15 @@ public class Autonomous extends CommandBase {
   @Override
   public void initialize() 
   {
-    Drivetrain.classicDrive(.3, .3);
-    wait(500);
+    Drivetrain.classicDrive(1, 1);
+    new WaitCommand(1);
     Drivetrain.classicDrive(0, 0);
     Intake.updateToggle();
-    Drivetrain.classicDrive(.5, .5);
-    wait(1000);
+    Drivetrain.classicDrive(-1, -1);
+    new WaitCommand(1);
     Drivetrain.classicDrive(0, 0);
+
+    restartTimer();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -63,15 +66,14 @@ public class Autonomous extends CommandBase {
     return false;
   }
 
-  private static void wait(int mili)
+  public void restartTimer()
   {
-    try
-     {
-        Thread.sleep(mili);
-      }
-      catch(InterruptedException ex)
-      {
-        Thread.currentThread().interrupt();
-     }
+    createdMillis = System.currentTimeMillis();
+  }
+
+  public int getAgeInSeconds() 
+  {
+      long nowMillis = System.currentTimeMillis();
+      return (int)((nowMillis - this.createdMillis) / 1000);
   }
 }
