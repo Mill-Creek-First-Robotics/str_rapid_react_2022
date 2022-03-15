@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ChadDrive extends SubsystemBase {
   private static double currentRotationRate;
-  static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
+  //static AHRS gyroscope = new AHRS(SPI.Port.kMXP);
   static PIDController angleController;
   
   /** Creates a new ExampleSubsystem. */
@@ -36,31 +36,20 @@ public class ChadDrive extends SubsystemBase {
    * @param leftY Y axis of the left thumbstick/joystick
    * @param rightY Y axis of the right thumbstick/joystick
    * @param rightX X axis of the right thumbstick/joystick
-   * @param button button that rotates the robot to a designated angle
    */
-  public static void chadDrive(double leftY,double rightY,int POV,boolean button, double rightX)
+  public static void chadDrive(double leftY,double rightY,int POV, double rightX)
   {
-
-    if(button)
-    {
-      
-      System.out.println(POV);
-      ultraMegaTurningMethod(POV);
-      
-    }
-    else
-    {
-      //Drivetrain.differentialDrive.tankDrive(leftY, rightY);
-      Drivetrain.differentialDrive.arcadeDrive(rightX, leftY);
-      currentRotationRate = 0;
-    }
+	//Drivetrain.differentialDrive.tankDrive(leftY, rightY);
+    Drivetrain.differentialDrive.arcadeDrive(rightX, leftY);
+    currentRotationRate = 0;
   }
 
   /** UMTM
    * responsible for rotating the robot to a designated angle 
    * @param angle sets the setpoint for the PID system
+   * @deprecated
    */
-  public static void ultraMegaTurningMethod(double angle)
+  /*public static void ultraMegaTurningMethod(double angle)
   {
     System.out.println("UMTM has been called");
 
@@ -71,27 +60,29 @@ public class ChadDrive extends SubsystemBase {
       currentRotationRate = angleController.calculate(gyroscope.getYaw());
       Drivetrain.differentialDrive.arcadeDrive(currentRotationRate, 0);
     
-  }
+  }*/
  
   /**zeroGyro()
    * sets a button 
    * @param button button that is used
+   * @deprecated
    */
-  public static void zeroGyro(boolean button)
+  /*public static void zeroGyro(boolean button)
   {
     if(button)
       gyroscope.zeroYaw();
-  }
+  }*/
 
   /**calibrate()
    * 
    * @param button button that is used
+   * @deprecated
    */
-  public static void calibrate(boolean button)
+  /*public static void calibrate(boolean button)
   {
     if(button)
       gyroscope.calibrate();
-  }
+  }*/
 
 
 
