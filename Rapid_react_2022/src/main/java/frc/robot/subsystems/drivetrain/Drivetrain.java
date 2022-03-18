@@ -24,6 +24,7 @@ public class Drivetrain extends SubsystemBase {
   static WPI_TalonSRX backRightMotor = new WPI_TalonSRX(Constants.BACK_RIGHT_MOTOR);
   public static MecanumDrive mecanumDrive;
   private static boolean slowMode = false;
+  private static boolean turboMode = false;
   public static MotorControllerGroup rightMotors = new MotorControllerGroup(frontRightMotor, backRightMotor);
   static MotorControllerGroup leftMotors = new MotorControllerGroup(frontLeftMotor, backLeftMotor);
   public static DifferentialDrive differentialDrive = new DifferentialDrive(leftMotors, rightMotors);
@@ -55,6 +56,8 @@ public class Drivetrain extends SubsystemBase {
   {
     if(slowMode)
       differentialDrive.arcadeDrive(leftY * .5, rightX * .5);
+    else if(turboMode)
+      differentialDrive.arcadeDrive(leftY, rightX);
     else
       differentialDrive.arcadeDrive(leftY * .8, rightX * .8);
   }
@@ -64,6 +67,17 @@ public class Drivetrain extends SubsystemBase {
     slowMode = !slowMode;
   }
 
+  public static void holdTurbo(boolean button)
+  {
+    if(button)
+    {
+      turboMode = true;
+    }
+    else
+    {
+      turboMode = false;
+    }
+  }
   @Override
   public void periodic() 
   {

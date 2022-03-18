@@ -102,16 +102,11 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //m_drivetrain.classicDrive(-stick.getLeftY() * .9, -stick.getRightY() * .9);
     m_drivetrain.tuxDrive(stick.getRightX(), stick.getLeftY() * -1);
-    if(stick.getRawButton(5))
-    {
-      m_drivetrain.toggleSlow();
-    }
+    if(stick.getRawButton(5)){m_drivetrain.toggleSlow();}
+    m_drivetrain.holdTurbo(stick.getRawButton(6));
     //m_chadDrive.zeroGyro(stick.getRawButton(2));
     //m_chadDrive.calibrate(stick.getRawButton(3));
-    if(stick.getRawButton(1))
-    {
-    Intake.switchArm();
-    }
+    if(stick.getRawButton(1)){Intake.switchArm();}
     //m_drivetrain.supremeTankDrive(stick.getLeftY(), stick.getRightX(), stick.getRightY());
     new touchingLimit(m_intake);     
   }
