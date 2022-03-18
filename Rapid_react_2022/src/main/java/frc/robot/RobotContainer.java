@@ -11,6 +11,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.*;
@@ -28,7 +29,7 @@ public class RobotContainer {
   private final Drivetrain m_drivetrain = new Drivetrain();
   private final ChadDrive m_chadDrive = new ChadDrive();
   private final Intake m_intake = new Intake();
-  private final Autonomous m_autoCommand = new Autonomous(m_drivetrain,m_intake);
+  private final Command m_autoCommand = null;
   final XboxController stick = new XboxController(Constants.CONTROLLER);
   
   JoystickButton aButton = new JoystickButton(stick, 1);
@@ -63,6 +64,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
   }

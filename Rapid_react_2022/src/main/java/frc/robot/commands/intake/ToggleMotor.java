@@ -21,6 +21,7 @@ public class ToggleMotor extends CommandBase {
     m_intake = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
     //addRequirements(subsystem);
+    initialize();
   }
 
   // Called when the command is initially scheduled.

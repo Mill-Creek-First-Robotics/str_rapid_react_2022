@@ -78,8 +78,8 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    if(Timer.getFPGATimestamp() - startTime < 1.0) {
-      Drivetrain.classicDrive(-0.5, .5);
+    if(Timer.getFPGATimestamp() - startTime < 1000.0) {
+      Drivetrain.tuxDrive(0, -.7);
     } else {
       Drivetrain.classicDrive(0, 0);
     }
