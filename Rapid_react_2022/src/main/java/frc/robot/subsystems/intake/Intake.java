@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
   static // calls da roller motor and assigns it a speed controller
-  double el_speed = -0.30;
+  double el_speed = -0.55;
   static WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
   static WPI_TalonSRX arm = new WPI_TalonSRX(Constants.ARM_MOTOR);
   static boolean toggled = false;

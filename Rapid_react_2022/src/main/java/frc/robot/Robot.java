@@ -78,7 +78,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    if(Timer.getFPGATimestamp() - startTime < 1000.0) {
+    if(Timer.getFPGATimestamp() - startTime < 5.0) {
       Drivetrain.tuxDrive(0, -.7);
     } else {
       Drivetrain.classicDrive(0, 0);
@@ -102,8 +102,9 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     //m_drivetrain.classicDrive(-stick.getLeftY() * .9, -stick.getRightY() * .9);
     m_drivetrain.tuxDrive(stick.getRightX(), stick.getLeftY() * -1);
-    if(stick.getRawButton(5)){m_drivetrain.toggleSlow();}
+    //if(stick.getRawButton(5)){m_drivetrain.toggleSlow();}
     m_drivetrain.holdTurbo(stick.getRawButton(6));
+    m_drivetrain.holdTurbo(stick.getRawButton(5));
     //m_chadDrive.zeroGyro(stick.getRawButton(2));
     //m_chadDrive.calibrate(stick.getRawButton(3));
     if(stick.getRawButton(1)){Intake.switchArm();}
