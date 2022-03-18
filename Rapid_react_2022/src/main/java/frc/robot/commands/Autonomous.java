@@ -10,6 +10,7 @@ import frc.robot.subsystems.timer;
 import java.util.concurrent.TimeUnit;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.drivetrain.Drivetrain;
 import frc.robot.subsystems.intake.*;
@@ -18,6 +19,7 @@ public class Autonomous extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drivetrain m_drivetrain;
   private final Intake m_intake;
+  private final ScheduleCommand m_scheduler = new ScheduleCommand(new WaitCommand(1));
   private long createdMillis = System.currentTimeMillis();
   boolean yes = true;
   /**
@@ -37,13 +39,11 @@ public class Autonomous extends CommandBase {
   @Override
   public void initialize() 
   {
-    Drivetrain.classicDrive(1, 1);
-    new WaitCommand(1);
     Drivetrain.classicDrive(0, 0);
     Intake.updateToggle();
-    Drivetrain.classicDrive(-1, -1);
-    timer.sleep(1000);
-    Drivetrain.classicDrive(0, 0);
+    m_scheduler.schedule();
+    Drivetrain.classicDrive(-.5, .5);
+    m_scheduler.schedule();
 
     restartTimer();
   }
@@ -63,7 +63,7 @@ public class Autonomous extends CommandBase {
   @Override
   public boolean isFinished() 
   {
-    
+    Drivetrain.classicDrive(0, 0);
     return false;
   }
 

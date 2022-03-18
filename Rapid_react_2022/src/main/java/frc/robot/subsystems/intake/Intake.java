@@ -55,7 +55,7 @@ public class Intake extends SubsystemBase {
   {
     while(!(topSwitch.get()))
     {
-      arm.set(.4);
+      arm.set(1);
     }
     if(topSwitch.get())
     {
@@ -66,7 +66,7 @@ public class Intake extends SubsystemBase {
   {
     while(!(bottomSwitch.get()))
     {
-      arm.set(-.4);
+      arm.set(-1);
     }
     if(bottomSwitch.get())
     {
