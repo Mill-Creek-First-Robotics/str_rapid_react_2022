@@ -6,6 +6,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
+import frc.robot.commands.intake.touchingLimit;
 import frc.robot.subsystems.drivetrain.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -102,7 +103,8 @@ public class Robot extends TimedRobot {
     {
     Intake.switchArm();
     }
-    //m_drivetrain.supremeTankDrive(stick.getLeftY(), stick.getRightX(), stick.getRightY());    
+    //m_drivetrain.supremeTankDrive(stick.getLeftY(), stick.getRightX(), stick.getRightY());
+    new touchingLimit(m_intake);     
   }
 
   @Override
