@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.timer;
+import edu.wpi.first.wpilibj.Timer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -22,6 +22,7 @@ public class Autonomous extends CommandBase {
   private final ScheduleCommand m_scheduler = new ScheduleCommand(new WaitCommand(1));
   private long createdMillis = System.currentTimeMillis();
   boolean yes = true;
+  private double startTime;
   /**
    * Creates a new ExampleCommand.
    *
@@ -41,18 +42,22 @@ public class Autonomous extends CommandBase {
   {
     Drivetrain.classicDrive(0, 0);
     Intake.updateToggle();
-    m_scheduler.schedule();
-    Drivetrain.classicDrive(-.5, .5);
-    m_scheduler.schedule();
-
-    restartTimer();
+    startTime = Timer.getFPGATimestamp();
+    //m_scheduler.schedule();
+    //Drivetrain.classicDrive(-.5, .5);
+    //m_scheduler.schedule();
+    //Drivetrain.classicDrive(0, 0);SSS
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() 
   {
-
+    if(Timer.getFPGATimestamp() - startTime < 1.0) {
+      Drivetrain.classicDrive(-0.5, .5);
+    } else {
+      Drivetrain.classicDrive(0, 0);
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -63,7 +68,6 @@ public class Autonomous extends CommandBase {
   @Override
   public boolean isFinished() 
   {
-    Drivetrain.classicDrive(0, 0);
     return false;
   }
 
