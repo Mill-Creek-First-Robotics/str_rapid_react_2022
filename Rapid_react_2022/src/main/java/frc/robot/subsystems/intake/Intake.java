@@ -19,7 +19,7 @@ public class Intake extends SubsystemBase {
   double el_speed = 0.25;
   static WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
   static WPI_TalonSRX arm = new WPI_TalonSRX(Constants.ARM_MOTOR);
-  static boolean toggled;
+  static boolean toggled = false;
   static int armPosition = 0;
   static DigitalInput topSwitch = new DigitalInput(0);
   static DigitalInput bottomSwitch = new DigitalInput(1);
@@ -62,24 +62,21 @@ public class Intake extends SubsystemBase {
       arm.set(0);
     }
   }
-  public static void lowerArm()
+  public static void lowerArm(boolean button)
   {
-    while(!(bottomSwitch.get()))
+    while(!(button))
     {
       arm.set(-1);
     }
-    if(bottomSwitch.get())
-    {
-      arm.set(0);
-    }
+    arm.set(0);
   }
 
-  public static void switchArm()
+  public static void switchArm(boolean button)
   {
 
     if(armPosition == 1)
     {
-      lowerArm();
+      lowerArm(button);
       armPosition = 0;
     }
     else if(armPosition == 0)
