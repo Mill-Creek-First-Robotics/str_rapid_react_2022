@@ -1,34 +1,32 @@
+package frc.robot.commands.intake;
+
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.intake;
-
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.intake.Intake;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.intake.Intake;
 
 /** An example command that uses an example subsystem. */
-public class SwitchArm extends CommandBase {
+public class touchingLimit extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final Intake m_subsystem;
+  private final Intake m_intake;
 
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public SwitchArm(Intake subsystem) {
-    m_subsystem = subsystem;
+  public touchingLimit(Intake subsystem) {
+    m_intake = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    //addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() 
-  {
-    m_subsystem.switchArm();
+  public void initialize() {
+    m_intake.updateToggle();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -22,7 +22,8 @@ public class Intake extends SubsystemBase {
   static boolean toggled = false;
   static int armPosition = 0;
   static DigitalInput topSwitch = new DigitalInput(0);
-  static DigitalInput bottomSwitch = new DigitalInput(1);
+  static boolean armOn = false;
+  //static DigitalInput bottomSwitch = new DigitalInput(1);
   public Intake() {
     roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
     toggled = false;
@@ -53,39 +54,41 @@ public class Intake extends SubsystemBase {
 
   public static void raiseArm()
   {
-    while(!(topSwitch.get()))
-    {
+    if(!(topSwitch.get()))
       arm.set(1);
-    }
-    if(topSwitch.get())
-    {
-      arm.set(0);
-    }
+      armOn = true;
   }
-  public static void lowerArm(boolean button)
+  public static void lowerArm()
   {
-    while(!(button))
-    {
-      arm.set(-1);
-    }
-    arm.set(0);
+    arm.set(-1);
+    armOn = true;
   }
 
-  public static void switchArm(boolean button)
+  public static void switchArm()
   {
 
     if(armPosition == 1)
     {
-      lowerArm(button);
       armPosition = 0;
+      lowerArm();
     }
     else if(armPosition == 0)
     {
-      raiseArm();
       armPosition = 1;
+      raiseArm();
     }
     else{
       System.out.println("¯\\_(ツ)_/¯");
+    }
+  }
+
+  public static void touching() {
+    if(topSwitch.get()) {
+      arm.set(0);
+      armOn = false;
+    }
+    if(armPosition == 1 && armOn == false) {
+      raiseArm();
     }
   }
 
