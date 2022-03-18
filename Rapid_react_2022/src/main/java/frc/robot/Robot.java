@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.intake.touchingLimit;
 import frc.robot.subsystems.drivetrain.*;
@@ -25,6 +26,7 @@ public class Robot extends TimedRobot {
   private ChadDrive m_chadDrive = new ChadDrive();
   private Drivetrain m_drivetrain = new Drivetrain();
   private XboxController stick = new XboxController(Constants.CONTROLLER);
+  private double startTime;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -64,8 +66,9 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    Drivetrain.classicDrive(0, 0);
+    startTime = Timer.getFPGATimestamp();
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -74,7 +77,13 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+    if(Timer.getFPGATimestamp() - startTime < 1.0) {
+      Drivetrain.classicDrive(-0.5, .5);
+    } else {
+      Drivetrain.classicDrive(0, 0);
+    }
+  }
 
   @Override
   public void teleopInit() {
