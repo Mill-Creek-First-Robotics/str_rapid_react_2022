@@ -16,7 +16,7 @@ public class Intake extends SubsystemBase {
   /** Creates a new ExampleSubsystem. */
 
   static // calls da roller motor and assigns it a speed controller
-  double el_speed = -0.55;
+  double el_speed = -1.0;
   static WPI_TalonSRX roller = new WPI_TalonSRX(Constants.ROLLER_MOTOR);
   static WPI_TalonSRX arm = new WPI_TalonSRX(Constants.ARM_MOTOR);
   static boolean toggled = false;
@@ -46,6 +46,16 @@ public class Intake extends SubsystemBase {
 
     // if toggled is on it will set to default speed
     // else toggled must be off and speed is zero
+    if (toggled) {
+      roller.set(el_speed);
+    } else {
+      roller.set(0);
+    }
+  }
+
+  public static void enabled(boolean enabled) {
+    toggled = enabled;
+
     if (toggled) {
       roller.set(el_speed);
     } else {
