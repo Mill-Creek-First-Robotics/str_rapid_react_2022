@@ -46,17 +46,12 @@ public class Drivetrain extends SubsystemBase {
    */
   public static void classicDrive(double leftY, double rightY)
   {
-    if (slowMode) {
-      differentialDrive.tankDrive(leftY * .5, rightY * .5);
-    }
     differentialDrive.tankDrive(leftY, -rightY);
   }
 
   public static void tuxDrive(double leftY, double rightX)
   {
-    if(slowMode)
-      differentialDrive.arcadeDrive(leftY * .5, rightX * .5);
-    else if(turboMode)
+    if(turboMode)
       differentialDrive.arcadeDrive(leftY, rightX);
     else
       differentialDrive.arcadeDrive(leftY * .8, rightX * .8);
